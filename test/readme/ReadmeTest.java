@@ -8,15 +8,23 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class ReadmeTest {
 
+    private String templateFilePath = Paths.get(System.getProperty("user.dir"), "resources", "README.md").toString();
+
     @Test
     public void resourceTest() throws Exception {
-        StringBuilder sb = newTable();
+        StringBuilder sb = new StringBuilder();
+        sb.append(readTemplate());
+
         String dataFilePath = Paths.get(System.getProperty("user.dir"), "resources", "problems.yml").toString();
         String readmeFilePath = Paths.get(System.getProperty("user.dir"), "README.md").toString();
+
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         try {
             Problem[] problems = mapper.readValue(new File(dataFilePath), Problem[].class);
@@ -30,8 +38,16 @@ public class ReadmeTest {
             e.printStackTrace();
             throw new Exception("unable to parse problem.yml");
         }
+    }
 
-
+    private String readTemplate() {
+        StringBuilder content = new StringBuilder();
+        try (Stream<String> stream = Files.lines(Paths.get(templateFilePath), StandardCharsets.UTF_8)) {
+            stream.forEach(s -> content.append(s).append("\n"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content.toString();
     }
 
     private String composeTableRow(Problem problem) {
@@ -43,11 +59,5 @@ public class ReadmeTest {
         return String.format("[Solution](./java/q%03d/Solution.java)", problem.getId());
     }
 
-    private StringBuilder newTable() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("| ID | TITLE  | SOLUTION  |\n");
-        sb.append("|----|--------|-----------|\n");
-        return sb;
-    }
 
 }
