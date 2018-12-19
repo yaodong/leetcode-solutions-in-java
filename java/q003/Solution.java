@@ -13,22 +13,18 @@ public class Solution {
             return 1;
         }
 
-        HashSet<Character> seen = new HashSet<>();
-        int ans = 0;
-        int i = 0;
-        int j = 0;
-        int n = s.length();
-
-        while (i < n && j < n) {
-            if (!seen.contains(s.charAt(j))) {
-                seen.add(s.charAt(j++));
-                ans = Math.max(ans, j - i);
-            } else {
-                seen.remove(s.charAt(i++));
+        int maxLen = 0;
+        HashSet<Character> set = new HashSet<>();
+        for (int end = 0, head = 0; end < s.length(); end++) {
+            while (set.contains(s.charAt(end))) {
+                set.remove(s.charAt(head++));
             }
+
+            set.add(s.charAt(end));
+            maxLen = Math.max(maxLen, set.size());
         }
 
-        return ans;
+        return maxLen;
     }
 
 }
