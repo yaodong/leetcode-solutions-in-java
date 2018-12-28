@@ -14,7 +14,7 @@ public class WordLadderTest {
     private WordLadder solution;
 
     @Before
-    public void setup() {
+    public void setUp() {
         solution = new WordLadder();
     }
 
