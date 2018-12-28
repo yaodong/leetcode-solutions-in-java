@@ -1,6 +1,7 @@
 package q004;
 
-public class Solution {
+public class MedianOfTwoSortedArrays {
+
     public static double findMedianSortedArrays(int[] arr1, int[] arr2) {
 
         // let arr1 always be the smaller one
