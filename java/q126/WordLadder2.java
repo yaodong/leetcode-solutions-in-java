@@ -15,7 +15,7 @@ public class WordLadder2 {
     private String endWord;
     private Map<String, Set<String>> neighbors;
     private HashMap<String, Integer> distances = new HashMap<>();
-    private Queue<String> queue = new LinkedList<>();
+    private Queue<String> queue = new ArrayDeque<>();
     private List<List<String>> paths = new ArrayList<>();
 
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {

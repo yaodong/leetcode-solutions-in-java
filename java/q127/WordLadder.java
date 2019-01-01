@@ -17,7 +17,7 @@ public class WordLadder {
 
         Map<String, List<String>> neighborMap = makeNeighborMap(wordList);
 
-        Queue<String> queue = new LinkedList<>();
+        Queue<String> queue = new ArrayDeque<>();
         queue.offer(beginWord);
 
         Set<String> visited = new HashSet<>();
