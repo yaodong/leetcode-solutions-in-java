@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
@@ -22,14 +23,16 @@ public class ReadmeTest {
         StringBuilder sb = new StringBuilder();
         sb.append(readTemplate());
 
-        String dataFilePath = Paths.get(System.getProperty("user.dir"), "resources", "problems.yml").toString();
+        String dataFilePath = Paths.get(System.getProperty("user.dir"), "resources", "leetcode.yml").toString();
         String readmeFilePath = Paths.get(System.getProperty("user.dir"), "README.md").toString();
 
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         try {
             Problem[] problems = mapper.readValue(new File(dataFilePath), Problem[].class);
             for (Problem problem : problems) {
-                sb.append(composeTableRow(problem));
+                if (hasSolution(problem)) {
+                    sb.append(composeTableRow(problem));
+                }
             }
             BufferedWriter writer = new BufferedWriter(new FileWriter(readmeFilePath));
             writer.write(sb.toString());
@@ -38,6 +41,12 @@ public class ReadmeTest {
             e.printStackTrace();
             throw new Exception("unable to parse problem.yml");
         }
+    }
+
+    private boolean hasSolution(Problem problem) {
+        Path path = Paths.get(System.getProperty("user.dir"), "java", "leetcode", String.format("q%03d", problem.getId()));
+        boolean isf = path.toFile().isDirectory();
+        return isf;
     }
 
     private String readTemplate() {

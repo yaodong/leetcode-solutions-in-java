@@ -4,7 +4,16 @@ public class Problem {
 
     private int id;
     private String title;
+    private String slug;
     private String url;
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 
     public void setId(int id) {
         this.id = id;
