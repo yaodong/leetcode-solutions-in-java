@@ -84,7 +84,7 @@ public class LeetCodeTest {
     }
 
     private String composeFilePath(String folderName) {
-        return String.format("[Solution](./java/%s/Solution.java)", folderName);
+        return String.format("[Solution](./java/leetcode/%s/Solution.java)", folderName);
     }
 
 
